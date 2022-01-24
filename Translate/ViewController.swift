@@ -55,12 +55,6 @@ private extension ViewController {
         [tag1, tag2, tag3].forEach {
             $0?.isEditable = false
         }
-//        [textView1, textView2, textView3].forEach {
-//            $0?.delegate = self
-//        }
-//        textView1.nextKeyView = textView2
-//        textView2.nextKeyView = textView3
-//        textView3.nextKeyView = textView1
         
         textView1.becomeFirstResponder()
         tag1.stringValue = "请输入模版翻译"
@@ -75,19 +69,4 @@ private extension ViewController {
             tag3.stringValue = "Values"
         }
     }
-}
-
-extension ViewController: NSTextViewDelegate {
-//    func textView(_ textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-//        if commandSelector == #selector(NSTextView.insertTab(_:)) {
-////            textView.resignFirstResponder()
-////            if textView === textView1 {
-////                textView2.becomeFirstResponder()
-////            } else if textView === textView2 {
-////                textView3.becomeFirstResponder()
-////            }
-//            return true
-//        }
-//        return false
-//    }
 }
