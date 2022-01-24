@@ -11,6 +11,7 @@
 		B6A603A1279E42E800090C49 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A603A0279E42E800090C49 /* ViewController.swift */; };
 		B6A603A3279E42E900090C49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6A603A2279E42E900090C49 /* Assets.xcassets */; };
 		B6A603A6279E42E900090C49 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6A603A4279E42E900090C49 /* Main.storyboard */; };
+		B6A603AF279E431500090C49 /* Translate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A603AE279E431500090C49 /* Translate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		B6A603A5279E42E900090C49 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B6A603A7279E42E900090C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6A603A8279E42E900090C49 /* Translate.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Translate.entitlements; sourceTree = "<group>"; };
+		B6A603AE279E431500090C49 /* Translate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				B6A6039E279E42E800090C49 /* AppDelegate.swift */,
 				B6A603A0279E42E800090C49 /* ViewController.swift */,
+				B6A603AE279E431500090C49 /* Translate.swift */,
 				B6A603A2279E42E900090C49 /* Assets.xcassets */,
 				B6A603A4279E42E900090C49 /* Main.storyboard */,
 				B6A603A7279E42E900090C49 /* Info.plist */,
@@ -134,6 +137,7 @@
 			files = (
 				B6A603A1279E42E800090C49 /* ViewController.swift in Sources */,
 				B6A6039F279E42E800090C49 /* AppDelegate.swift in Sources */,
+				B6A603AF279E431500090C49 /* Translate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -257,7 +261,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
