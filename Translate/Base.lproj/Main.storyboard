@@ -711,12 +711,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCm-sJ-F0g">
-                                <rect key="frame" x="618" y="353" width="256" height="24"/>
+                                <rect key="frame" x="586" y="353" width="321" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectOne" id="Zgk-9q-ron">
                                     <font key="font" metaFont="system"/>
                                     <segments>
                                         <segment label="根据Excel生成翻译" width="125"/>
                                         <segment label="根据翻译生成Excel" width="124" selected="YES" tag="1"/>
+                                        <segment label="校验格式"/>
                                     </segments>
                                 </segmentedCell>
                                 <connections>
@@ -724,7 +725,7 @@
                                 </connections>
                             </segmentedControl>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MT6-7x-y2J">
-                                <rect key="frame" x="921" y="354" width="34" height="22"/>
+                                <rect key="frame" x="954" y="354" width="34" height="22"/>
                                 <buttonCell key="cell" type="square" title="Run" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vkl-Jr-M9x">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -733,6 +734,18 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="runButtonDidClick:" target="XfG-lQ-9wD" id="4DP-v7-BeP"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x6X-Aa-7b2">
+                                <rect key="frame" x="449" y="354" width="90" height="22"/>
+                                <buttonCell key="cell" type="square" title="从剪贴板运行" bezelStyle="shadowlessSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Prg-Xw-SPO">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">t</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pasteboardButtonDidClick:" target="XfG-lQ-9wD" id="6fk-Px-rgU"/>
                                 </connections>
                             </button>
                             <stackView distribution="fillEqually" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bCg-y5-VTr">
@@ -761,7 +774,7 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <size key="minSize" width="485" height="214"/>
-                                                            <size key="maxSize" width="485" height="10000000"/>
+                                                            <size key="maxSize" width="500" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
@@ -810,7 +823,7 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <size key="minSize" width="485" height="214"/>
-                                                            <size key="maxSize" width="485" height="10000000"/>
+                                                            <size key="maxSize" width="500" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
@@ -859,7 +872,7 @@
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <size key="minSize" width="485" height="214"/>
-                                                            <size key="maxSize" width="485" height="10000000"/>
+                                                            <size key="maxSize" width="500" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
@@ -899,6 +912,8 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="x6X-Aa-7b2" firstAttribute="centerY" secondItem="sCm-sJ-F0g" secondAttribute="centerY" id="9Dr-n3-ee3"/>
+                            <constraint firstItem="x6X-Aa-7b2" firstAttribute="trailing" secondItem="sCm-sJ-F0g" secondAttribute="leading" constant="-50" id="Jkb-YR-Gar"/>
                             <constraint firstAttribute="trailing" secondItem="bCg-y5-VTr" secondAttribute="trailing" id="Nzb-mB-bHr"/>
                             <constraint firstAttribute="bottom" secondItem="bCg-y5-VTr" secondAttribute="bottom" id="OZ1-Jy-4aH"/>
                             <constraint firstItem="MT6-7x-y2J" firstAttribute="centerY" secondItem="sCm-sJ-F0g" secondAttribute="centerY" id="R8z-U0-wAj"/>
@@ -906,11 +921,13 @@
                             <constraint firstItem="sCm-sJ-F0g" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" constant="-12" id="dle-sy-ndv"/>
                             <constraint firstItem="bCg-y5-VTr" firstAttribute="top" secondItem="sCm-sJ-F0g" secondAttribute="bottom" constant="20" id="emt-yV-tgB"/>
                             <constraint firstItem="sCm-sJ-F0g" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="eqU-GK-hGi"/>
+                            <constraint firstItem="x6X-Aa-7b2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="vYY-ZC-Gmi"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MT6-7x-y2J" secondAttribute="trailing" constant="20" symbolic="YES" id="wic-df-atM"/>
                             <constraint firstItem="MT6-7x-y2J" firstAttribute="leading" secondItem="sCm-sJ-F0g" secondAttribute="trailing" constant="50" id="z2C-aZ-WLl"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="column3Container" destination="Y4X-bJ-IXM" id="pKL-1Q-0W0"/>
                         <outlet property="segmentControl" destination="sCm-sJ-F0g" id="9pB-HF-7gp"/>
                         <outlet property="tag1" destination="4aJ-QV-oYa" id="XOc-wG-9ZL"/>
                         <outlet property="tag2" destination="fpG-xO-hqF" id="6aY-sC-tZU"/>
@@ -922,7 +939,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152" y="707.5"/>
+            <point key="canvasLocation" x="75" y="805"/>
         </scene>
     </scenes>
 </document>

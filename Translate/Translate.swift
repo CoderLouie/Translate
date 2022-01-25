@@ -28,6 +28,22 @@ fileprivate extension String {
 
         return String(self[lowerIndex..<upperIndex])
     }
+    
+    var isKeyValueFormatter: Bool {
+        guard !isEmpty else { return false }
+        let scanner = Scanner(string: self)
+        while !scanner.isAtEnd {
+            guard let _ = scanner.scanQuoteWithInfo() else { return false }
+            guard scanner.move(to: "=") != nil else { return false }
+            guard scanner.scanQuote() != nil else { return false }
+            return true
+        }
+        return false
+    }
+    
+    var escaped: String {
+        replacingOccurrences(of: #"""#, with: #"\""#)
+    }
 }
 
 fileprivate extension Scanner {
@@ -136,12 +152,18 @@ fileprivate extension Scanner {
     func scanQuote() -> String? {
         scanQuoteWithInfo()?.value
     }
+    
+    var errorDescription: String {
+        return peek(range: -5...0).map {
+            "invalid formatter with \($0)"
+        } ?? "can't location invalid string range"
+    }
 }
 
 enum Translate {
     static func strings(from excel: String, refer sample: String) -> String {
         let answer: [String]
-        if excel.contains("=") {
+        if excel.isKeyValueFormatter {
             var temp: [String] = []
             let scanner = Scanner(string: excel)
             while !scanner.isAtEnd {
@@ -157,25 +179,39 @@ enum Translate {
     }
     private static func makeAnswer(sample: String, answer: [String]) -> String {
         var result = ""
-        var index = 0
         
-        let scanner = Scanner(string: sample)
-        var location = 0
-        while !scanner.isAtEnd, index < answer.count {
-            guard let keyInfo = scanner.scanQuoteWithInfo() else { break }
+        if sample.isKeyValueFormatter {
+            var index = 0
+            let scanner = Scanner(string: sample)
             
-            result.append(sample[safe: location..<keyInfo.li - 1]!)
-            result.append("\"\(keyInfo.value)\" = ")
-            
-            guard scanner.move(to: "=") != nil else { fatalError() }
-            
-            guard scanner.scanQuote() != nil else { fatalError() }
-            result.append("\"\(answer[index])\";")
-            guard scanner.moveToCharacters(in: ";；") != nil else { fatalError() }
-            index += 1
-            location = scanner.scanLocation
+            var location = 0
+            while !scanner.isAtEnd, index < answer.count {
+                guard let keyInfo = scanner.scanQuoteWithInfo() else { break }
+                
+                result.append(sample[safe: location..<keyInfo.li - 1]!)
+                result.append("\"\(keyInfo.value)\" = ")
+                
+                guard scanner.move(to: "=") != nil else {
+                    return scanner.errorDescription
+                }
+                
+                guard scanner.scanQuote() != nil else {
+                    return scanner.errorDescription
+                } 
+                result.append("\"\(answer[index].escaped)\";")
+                guard scanner.moveToCharacters(in: ";；") != nil else {
+                    return scanner.errorDescription
+                }
+                index += 1
+                location = scanner.scanLocation
+            }
+            result.append(sample[safe: location..<sample.count]!)
+        } else {
+            let keys = sample.components(separatedBy: "\n").map { $0.trim() }.filter { !$0.isEmpty }
+            for kv in zip(keys, answer) {
+                result += "\"\(kv.0)\" = \"\(kv.1.escaped)\";\n"
+            }
         }
-        result.append(sample[safe: location..<sample.count]!)
         
         return result
     }
@@ -189,30 +225,36 @@ enum Translate {
             guard let key = scanner.scanQuote() else { break }
             keys.append(key)
             
-            guard scanner.move(to: "=") != nil else { fatalError() }
-            guard let value = scanner.scanQuote() else { fatalError() }
+            guard scanner.move(to: "=") != nil else {
+                return (scanner.errorDescription, "")
+            }
+            guard let value = scanner.scanQuote() else {
+                return (scanner.errorDescription, "")
+            }
             values.append(value.replacingOccurrences(of: "\n", with: "#"))
             
-            guard scanner.moveToCharacters(in: ";；") != nil else { fatalError() }
+            guard scanner.moveToCharacters(in: ";；") != nil else {
+                return (scanner.errorDescription, "")
+            }
         }
         
         return (keys.joined(separator: "\n"), values.joined(separator: "\n"))
     }
 
     @discardableResult
-    func validFormat(strings: String) -> String? {
-        let defaultLoc = "can't location invalid string range"
+    static func validFormat(_ strings: String) -> String? {
         let scanner = Scanner(string: strings)
         while !scanner.isAtEnd {
             guard let _ = scanner.scanQuoteWithInfo() else { break }
             guard scanner.move(to: "=") != nil else {
-                return scanner.peek(range: -5...0) ?? defaultLoc
+                return scanner.errorDescription
             }
             guard scanner.scanQuote() != nil else {
-                return scanner.peek(range: -5...0) ?? defaultLoc
+                return scanner.errorDescription
             }
+            scanner.scanLocation += 1
             guard scanner.moveToCharacters(in: ";", beforeOccurrencesSetInstring: "\"“”") != nil else {
-                return scanner.peek(range: -5...0) ?? defaultLoc
+                return scanner.errorDescription
             }
         }
         return nil
