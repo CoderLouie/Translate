@@ -10,6 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
     @IBOutlet weak var segmentControl: NSSegmentedControl!
+    @IBOutlet weak var copyToPboardButton: NSButton!
     
     @IBOutlet weak var tag1: NSTextField!
     @IBOutlet var textView1: NSTextView!
@@ -34,7 +35,7 @@ class ViewController: NSViewController {
         print(pboard.string(forType: .string) ?? "empty")
         guard let string = pboard.string(forType: .string)?.trim(),
               !string.isEmpty else { return }
-        perform(string)
+        perform(string, setter: true)
     }
     @IBAction func runButtonDidClick(_ sender: NSButton) {
         let index = segmentControl.selectedSegment
@@ -53,29 +54,38 @@ class ViewController: NSViewController {
 }
 
 private extension ViewController {
-    func perform(_ string: String) {
+    func perform(_ string: String, setter: Bool = false) {
         let index = segmentControl.selectedSegment
         if index == 0 {
             let sample = textView1.string.trim()
+            if setter { textView2.string = string }
             let res = Translate.strings(from: string, refer: sample)
             textView3.string = res
             
-            guard !res.isEmpty else { return }
-            let pboard = NSPasteboard.general
-            pboard.declareTypes([.string], owner: nil)
-            pboard.setString(res, forType: .string)
+            guard copyToPboardButton.state == .on,
+                  !res.isEmpty else { return }
+            copyToPasterboard(res)
         } else if index == 1 {
+            if setter { textView1.string = string }
             let res = Translate.excel(from: string)
             textView2.string = res.key
             textView3.string = res.value
             
-            let pboard = NSPasteboard.general
-            pboard.declareTypes([.string], owner: nil)
-            pboard.setString(res.value, forType: .string)
-            pboard.setString(res.key, forType: .string)
+            guard copyToPboardButton.state == .on else { return }
+            copyToPasterboard(res.value, res.key)
         } else {
-            let res = Translate.validFormat(string) ?? "Success"
+            if setter { textView1.string = string }
+            let res = Translate.validFormat(string) ?? "Paussed"
             textView2.string = res
+        }
+    }
+    
+    func copyToPasterboard(_ strings: String...) {
+        guard !strings.isEmpty else { return }
+        let pboard = NSPasteboard.general
+        pboard.declareTypes([.string], owner: nil)
+        for string in strings {
+            pboard.setString(string, forType: .string)
         }
     }
 }

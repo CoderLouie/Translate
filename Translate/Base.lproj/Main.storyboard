@@ -910,17 +910,32 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CjH-9y-jku">
+                                <rect key="frame" x="1340" y="356" width="146" height="18"/>
+                                <buttonCell key="cell" type="check" title="将结果保存到粘贴板" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Nme-3B-e9e">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">r</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="runButtonDidClick:" target="XfG-lQ-9wD" id="w3Y-Bk-i2X"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="CjH-9y-jku" firstAttribute="centerY" secondItem="MT6-7x-y2J" secondAttribute="centerY" id="0Xi-yY-H00"/>
                             <constraint firstItem="x6X-Aa-7b2" firstAttribute="centerY" secondItem="sCm-sJ-F0g" secondAttribute="centerY" id="9Dr-n3-ee3"/>
                             <constraint firstItem="x6X-Aa-7b2" firstAttribute="trailing" secondItem="sCm-sJ-F0g" secondAttribute="leading" constant="-50" id="Jkb-YR-Gar"/>
                             <constraint firstAttribute="trailing" secondItem="bCg-y5-VTr" secondAttribute="trailing" id="Nzb-mB-bHr"/>
                             <constraint firstAttribute="bottom" secondItem="bCg-y5-VTr" secondAttribute="bottom" id="OZ1-Jy-4aH"/>
+                            <constraint firstAttribute="trailing" secondItem="CjH-9y-jku" secondAttribute="trailing" constant="30" id="QhO-q8-JKV"/>
                             <constraint firstItem="MT6-7x-y2J" firstAttribute="centerY" secondItem="sCm-sJ-F0g" secondAttribute="centerY" id="R8z-U0-wAj"/>
                             <constraint firstItem="bCg-y5-VTr" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="ceF-yh-ZaM"/>
                             <constraint firstItem="sCm-sJ-F0g" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" constant="-12" id="dle-sy-ndv"/>
                             <constraint firstItem="bCg-y5-VTr" firstAttribute="top" secondItem="sCm-sJ-F0g" secondAttribute="bottom" constant="20" id="emt-yV-tgB"/>
                             <constraint firstItem="sCm-sJ-F0g" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="eqU-GK-hGi"/>
+                            <constraint firstItem="CjH-9y-jku" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MT6-7x-y2J" secondAttribute="trailing" constant="8" symbolic="YES" id="lWl-sp-u3a"/>
                             <constraint firstItem="x6X-Aa-7b2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="vYY-ZC-Gmi"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MT6-7x-y2J" secondAttribute="trailing" constant="20" symbolic="YES" id="wic-df-atM"/>
                             <constraint firstItem="MT6-7x-y2J" firstAttribute="leading" secondItem="sCm-sJ-F0g" secondAttribute="trailing" constant="50" id="z2C-aZ-WLl"/>
@@ -928,6 +943,7 @@
                     </view>
                     <connections>
                         <outlet property="column3Container" destination="Y4X-bJ-IXM" id="pKL-1Q-0W0"/>
+                        <outlet property="copyToPboardButton" destination="CjH-9y-jku" id="VxU-05-dbd"/>
                         <outlet property="segmentControl" destination="sCm-sJ-F0g" id="9pB-HF-7gp"/>
                         <outlet property="tag1" destination="4aJ-QV-oYa" id="XOc-wG-9ZL"/>
                         <outlet property="tag2" destination="fpG-xO-hqF" id="6aY-sC-tZU"/>

@@ -142,15 +142,15 @@ fileprivate extension Scanner {
         return moveUpToCharacters(of: .init(charactersIn: string))
     }
      
-    func scanQuoteWithInfo() -> (value: String, li: Int, ri: Int)? {
-        let quote = "\"“”"
+    func scanQuoteWithInfo(_ exactly: Bool = false) -> (value: String, li: Int, ri: Int)? {
+        let quote = exactly ? "\"" : "\"“”"
         guard moveToCharacters(in: quote) != nil else { return nil }
         let li = scanLocation
         guard let result = moveUpToCharacters(in: quote) else { return nil }
         return (result, li, scanLocation)
     }
-    func scanQuote() -> String? {
-        scanQuoteWithInfo()?.value
+    func scanQuote(_ exactly: Bool = false) -> String? {
+        scanQuoteWithInfo(exactly)?.value
     }
     
     var errorDescription: String {
@@ -245,15 +245,15 @@ enum Translate {
     static func validFormat(_ strings: String) -> String? {
         let scanner = Scanner(string: strings)
         while !scanner.isAtEnd {
-            guard let _ = scanner.scanQuoteWithInfo() else { break }
+            guard let _ = scanner.scanQuoteWithInfo(true) else { break }
             guard scanner.move(to: "=") != nil else {
                 return scanner.errorDescription
             }
-            guard scanner.scanQuote() != nil else {
+            guard scanner.scanQuote(true) != nil else {
                 return scanner.errorDescription
             }
             scanner.scanLocation += 1
-            guard scanner.moveToCharacters(in: ";", beforeOccurrencesSetInstring: "\"“”") != nil else {
+            guard scanner.moveToCharacters(in: ";", beforeOccurrencesSetInstring: "\"") != nil else {
                 return scanner.errorDescription
             }
         }
