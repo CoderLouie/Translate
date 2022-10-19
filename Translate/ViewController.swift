@@ -72,7 +72,8 @@ private extension ViewController {
             textView3.string = res.value
             
             guard copyToPboardButton.state == .on else { return }
-            copyToPasterboard(res.value, res.key)
+            copyToPasterboard(res.value)
+            copyToPasterboard(res.key)
         } else {
             if setter { textView1.string = string }
             let res = Translate.validFormat(string) ?? "Paussed"

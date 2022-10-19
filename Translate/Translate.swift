@@ -238,7 +238,7 @@ enum Translate {
             }
         }
         
-        return (keys.joined(separator: "\n"), values.joined(separator: "\n"))
+        return (keys.joined(separator: "\r\n"), values.joined(separator: "\r\n"))
     }
 
     @discardableResult
